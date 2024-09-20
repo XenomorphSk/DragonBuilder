@@ -4,7 +4,7 @@ Descrição
 Dragon Builder é um script Bash para criar uma ISO Linux personalizada compatível com UEFI, baseada no sistema de arquivos root de uma instalação existente. O script gera uma imagem ISO inicializável, copiando o kernel, initramfs, e o sistema de arquivos do root para a ISO, utilizando o grub-mkrescue para garantir a compatibilidade com sistemas UEFI.
 Informações Gerais
 
-    Autor: Gabriel Skura Ribeiro
+    Autor: Gabriel S. Ribeiro
     Data de Criação: 21 de Setembro de 2024
     Versão: 1.1
 
