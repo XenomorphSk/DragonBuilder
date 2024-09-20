@@ -1,7 +1,7 @@
 #!/bin/bash
 ### BEGIN HEADER INFO
 # Title:        Dragon Builder
-# Author:       Gabriel Skura Ribeiro
+# Author:       Gabriel S. Ribeiro
 # Date:         2024-09-21
 # Version:      1.1
 # Description:  Script para criar ISO UEFI personalizada com sistema completo
