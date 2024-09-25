@@ -155,9 +155,26 @@ fix_firefox() {
     mkdir -p ~/.cache/mozilla/firefox/*/cache2
     mkdir -p ~/.mozilla/firefox/*/sessionstore-backups
 
+    # Suprimir erros do /proc ao limpar o Firefox
+    msg "Limpando arquivos do /proc relacionados ao Firefox..."
+    rm /proc/*/task/*/maps 2>/dev/null
+    rm /proc/*/task/*/smaps 2>/dev/null
+    rm /proc/*/task/*/smaps_rollup 2>/dev/null
+    rm /proc/*/task/*/stack 2>/dev/null
+    rm /proc/*/task/*/stat 2>/dev/null
+    rm /proc/*/task/*/statm 2>/dev/null
+    rm /proc/*/task/*/status 2>/dev/null
+    rm /proc/*/task/*/syscall 2>/dev/null
+    rm /proc/*/task/*/uid_map 2>/dev/null
+    rm /proc/*/task/*/wchan 2>/dev/null
+    rm /proc/*/*timerslack_ns 2>/dev/null
+    rm /proc/*/uid_map 2>/dev/null
+    rm /proc/*/wchan 2>/dev/null
+
     # Informar que o processo de correção foi concluído
     msg "Correções do Firefox concluídas."
 }
+
 
 # Função principal
 main() {
