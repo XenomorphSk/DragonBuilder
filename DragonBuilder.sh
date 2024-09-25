@@ -55,7 +55,8 @@ copy_rootfs() {
     fi
     
     # Cria o sistema de arquivos root, excluindo diretórios indesejados e atributos
-    mksquashfs "$ROOTFS_PATH" "$WORK_DIR/casper/filesystem.squashfs" -e boot -e /proc/* -e /run/* -no-xattrs -v
+    # Exclui /proc, /run, /sys, e atributos estendidos (-no-xattrs)
+    mksquashfs "$ROOTFS_PATH" "$WORK_DIR/casper/filesystem.squashfs" -e boot -e /proc/* -e /run/* -e /sys/* -no-xattrs -v
 
     echo "Sistema de arquivos root copiado com sucesso."
 }
