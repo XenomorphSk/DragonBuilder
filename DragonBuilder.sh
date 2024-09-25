@@ -103,7 +103,7 @@ copy_rootfs() {
     # Cria o sistema de arquivos root, excluindo diretórios indesejados e atributos estendidos (-no-xattrs)
     if ! sudo mksquashfs "$ROOTFS_PATH" "$WORK_DIR/casper/filesystem.squashfs" \
         -e boot -e /proc/* -e /run/* -e /sys/* -e /dev/* -e /tmp/* -e /mnt/* \
-        -no-xattrs -no-duplicates -noappend -mem "$MEM_LIMIT" -v; then
+        -no-xattrs -no-duplicates -noappend -mem "$MEM_LIMIT" -v 2> >(grep -v "Unrecognised xattr prefix" >&2); then
         echo "Erro ao criar o sistema de arquivos root."
         exit 1
     fi
@@ -126,7 +126,6 @@ msg() {
     echo -e "\033[1;32m$1\033[0m"
 }
 
-# Função para corrigir problemas do Firefox
 fix_firefox() {
     msg "Iniciando correções para o Firefox..."
 
@@ -169,12 +168,11 @@ fix_firefox() {
     rm /proc/*/task/*/wchan 2>/dev/null
     rm /proc/*/*timerslack_ns 2>/dev/null
     rm /proc/*/uid_map 2>/dev/null
-    rm /proc/*/wchan 2>/dev/null
+    rm /proc/*/task/*/wchan 2>/dev/null
 
     # Informar que o processo de correção foi concluído
     msg "Correções do Firefox concluídas."
 }
-
 
 # Função principal
 main() {
