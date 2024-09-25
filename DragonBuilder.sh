@@ -18,29 +18,44 @@ MEM_LIMIT="4096M"  # Limite de memória para mksquashfs
 # Função para instalar dependências
 install_dependencies() {
     echo "Instalando dependências..."
-    sudo apt-get update
-    sudo apt-get install -y grub-efi-amd64-bin mtools xorriso squashfs-tools
+    if ! sudo apt-get update; then
+        echo "Erro ao atualizar repositórios."
+        exit 1
+    fi
+    if ! sudo apt-get install -y grub-efi-amd64-bin mtools xorriso squashfs-tools; then
+        echo "Erro ao instalar dependências."
+        exit 1
+    fi
 }
 
 # Função para configurar EFI
 setup_efi_structure() {
     echo "Configurando EFI..."
-    mkdir -p "$EFI_DIR"
-    sudo cp /usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed "$EFI_DIR/bootx64.efi"
+    if ! sudo mkdir -p "$EFI_DIR"; then
+        echo "Erro ao criar diretório EFI."
+        exit 1
+    fi
+    if ! sudo cp /usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed "$EFI_DIR/bootx64.efi"; then
+        echo "Erro ao copiar o arquivo grubx64.efi para EFI."
+        exit 1
+    fi
 }
 
 # Função para copiar arquivos essenciais
 setup_filesystem() {
     echo "Copiando arquivos essenciais..."
-    mkdir -p "$WORK_DIR/casper"
-    mkdir -p "$WORK_DIR/boot/grub"
+    if ! sudo mkdir -p "$WORK_DIR/casper" "$WORK_DIR/boot/grub"; then
+        echo "Erro ao criar diretórios necessários."
+        exit 1
+    fi
     
     # Copia kernel e initramfs
-    cp /boot/vmlinuz-$(uname -r) "$WORK_DIR/casper/vmlinuz"
-    cp /boot/initrd.img-$(uname -r) "$WORK_DIR/casper/initrd.img"
-
-    if [ ! -f "$WORK_DIR/casper/vmlinuz" ] || [ ! -f "$WORK_DIR/casper/initrd.img" ]; then
-        echo "Erro: Kernel ou initrd.img não encontrados."
+    if ! sudo cp /boot/vmlinuz-$(uname -r) "$WORK_DIR/casper/vmlinuz"; then
+        echo "Erro ao copiar vmlinuz."
+        exit 1
+    fi
+    if ! sudo cp /boot/initrd.img-$(uname -r) "$WORK_DIR/casper/initrd.img"; then
+        echo "Erro ao copiar initrd.img."
         exit 1
     fi
 }
@@ -50,7 +65,7 @@ check_resources() {
     echo "Verificando espaço em disco e memória..."
     
     # Verifica espaço disponível no diretório de trabalho
-    DISK_AVAILABLE=$(df "$WORK_DIR" | tail -1 | awk '{print $4}')
+    DISK_AVAILABLE=$(df "$WORK_DIR" | awk 'NR==2 {print $4}')
     
     # Verifica se o espaço é maior que 10GB (requisito mínimo aproximado)
     if [ "$DISK_AVAILABLE" -lt 10485760 ]; then
@@ -59,7 +74,7 @@ check_resources() {
     fi
 
     # Verifica memória disponível
-    MEM_AVAILABLE=$(free -m | grep Mem | awk '{print $7}')
+    MEM_AVAILABLE=$(free -m | awk 'NR==2 {print $7}')
     
     # Verifica se a memória disponível é maior que 4GB
     if [ "$MEM_AVAILABLE" -lt 4096 ]; then
@@ -79,16 +94,16 @@ copy_rootfs() {
     
     # Remove o arquivo existente, se presente
     if [ -f "$WORK_DIR/casper/filesystem.squashfs" ]; then
-        echo "Removendo arquivo squashfs existente..."
-        rm "$WORK_DIR/casper/filesystem.squashfs"
+        if ! sudo rm "$WORK_DIR/casper/filesystem.squashfs"; then
+            echo "Erro ao remover arquivo squashfs existente."
+            exit 1
+        fi
     fi
 
     # Cria o sistema de arquivos root, excluindo diretórios indesejados e atributos estendidos (-no-xattrs)
-    mksquashfs "$ROOTFS_PATH" "$WORK_DIR/casper/filesystem.squashfs" \
+    if ! sudo mksquashfs "$ROOTFS_PATH" "$WORK_DIR/casper/filesystem.squashfs" \
         -e boot -e /proc/* -e /run/* -e /sys/* -e /dev/* -e /tmp/* -e /mnt/* \
-        -no-xattrs -no-duplicates -noappend -mem "$MEM_LIMIT" -v
-
-    if [ $? -ne 0 ]; then
+        -no-xattrs -no-duplicates -noappend -mem "$MEM_LIMIT" -v; then
         echo "Erro ao criar o sistema de arquivos root."
         exit 1
     fi
@@ -99,8 +114,7 @@ copy_rootfs() {
 # Função para criar ISO
 create_uefi_iso() {
     echo "Criando a ISO UEFI personalizada..."
-    grub-mkrescue -o "$ISO_OUTPUT" "$WORK_DIR" --modules="part_gpt part_msdos fat iso9660"
-    if [ $? -ne 0 ]; then
+    if ! sudo grub-mkrescue -o "$ISO_OUTPUT" "$WORK_DIR" --modules="part_gpt part_msdos fat iso9660"; then
         echo "Erro ao criar a ISO."
         exit 1
     fi
@@ -108,7 +122,7 @@ create_uefi_iso() {
 }
 
 # Função para exibir mensagens
-function msg() {
+msg() {
     echo -e "\033[1;32m$1\033[0m"
 }
 
@@ -163,7 +177,10 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Criação do diretório de trabalho
-mkdir -p "$WORK_DIR"
+if ! sudo mkdir -p "$WORK_DIR"; then
+    echo "Erro ao criar o diretório de trabalho."
+    exit 1
+fi
 
 # Executa a função principal
 main
