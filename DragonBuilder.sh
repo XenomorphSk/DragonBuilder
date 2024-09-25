@@ -122,15 +122,15 @@ fix_firefox() {
 
     # Limpar cache do Firefox
     msg "Limpando o cache do Firefox..."
-    rm -rf ~/.cache/mozilla/firefox/nxanjrov.default-release/cache2
-    rm -rf ~/.mozilla/firefox/nxanjrov.default-release/sessionstore-backups
+    rm -rf ~/.cache/mozilla/firefox/*/cache2
+    rm -rf ~/.mozilla/firefox/*/sessionstore-backups
 
     # Verificar permissões e corrigir, se necessário
     msg "Verificando permissões..."
     for dir in ~/.cache/mozilla/firefox ~/.mozilla/firefox; do
         if [ -d "$dir" ]; then
-            sudo chown -R $(whoami):$(whoami) "$dir"
-            msg "Propriedade do diretório $dir alterada para $(whoami)"
+            sudo chown -R "$USER:$USER" "$dir"
+            msg "Propriedade do diretório $dir alterada para $USER"
         else
             msg "Diretório $dir não encontrado."
         fi
@@ -138,8 +138,8 @@ fix_firefox() {
 
     # Recriar diretórios do cache
     msg "Recriando diretórios de cache do Firefox..."
-    mkdir -p ~/.cache/mozilla/firefox/nxanjrov.default-release/cache2
-    mkdir -p ~/.mozilla/firefox/nxanjrov.default-release/sessionstore-backups
+    mkdir -p ~/.cache/mozilla/firefox/*/cache2
+    mkdir -p ~/.mozilla/firefox/*/sessionstore-backups
 
     # Informar que o processo de correção foi concluído
     msg "Correções do Firefox concluídas."
