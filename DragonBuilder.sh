@@ -77,11 +77,16 @@ copy_rootfs() {
         exit 1
     fi
     
+    # Remove o arquivo existente, se presente
+    if [ -f "$WORK_DIR/casper/filesystem.squashfs" ]; then
+        echo "Removendo arquivo squashfs existente..."
+        rm "$WORK_DIR/casper/filesystem.squashfs"
+    fi
+
     # Cria o sistema de arquivos root, excluindo diretórios indesejados e atributos estendidos (-no-xattrs)
-    # Exclui /proc, /run, /sys, /dev, /tmp, /mnt
     mksquashfs "$ROOTFS_PATH" "$WORK_DIR/casper/filesystem.squashfs" \
         -e boot -e /proc/* -e /run/* -e /sys/* -e /dev/* -e /tmp/* -e /mnt/* \
-        -no-xattrs -no-duplicates -mem "$MEM_LIMIT" -v
+        -no-xattrs -no-duplicates -noappend -mem "$MEM_LIMIT" -v
 
     if [ $? -ne 0 ]; then
         echo "Erro ao criar o sistema de arquivos root."
