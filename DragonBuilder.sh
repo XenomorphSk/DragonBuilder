@@ -3,7 +3,7 @@
 # Title:        Dragon Builder
 # Author:       Gabriel S. Ribeiro
 # Date:         2024-09-21
-# Version:      1.2
+# Version:      1.3
 # Description:  Script para criar ISO UEFI personalizada com sistema completo, otimizado
 ### END HEADER INFO
 
@@ -12,7 +12,7 @@ ISO_OUTPUT="custom_linux_uefi.iso"
 WORK_DIR="/tmp/iso_build"
 EFI_DIR="$WORK_DIR/EFI/boot"
 GRUB_CFG_PATH="$WORK_DIR/boot/grub/grub.cfg"
-ROOTFS_PATH="/"  # Atualize o caminho para o sistema de arquivos root completo
+ROOTFS_PATH="/"  # Atualize este caminho para o diretório root filesystem desejado
 MEM_LIMIT="4096M"  # Limite de memória para mksquashfs
 
 # Função para instalar dependências
@@ -100,9 +100,9 @@ copy_rootfs() {
         fi
     fi
 
-    # Cria o sistema de arquivos root, excluindo diretórios indesejados e atributos estendidos (-no-xattrs)
+    # Cria o sistema de arquivos root, excluindo diretórios indesejados
     if ! sudo mksquashfs "$ROOTFS_PATH" "$WORK_DIR/casper/filesystem.squashfs" \
-        -e boot -e /proc/* -e /run/* -e /sys/* -e /dev/* -e /tmp/* -e /mnt/* \
+        -e boot -e proc -e run -e sys -e dev -e tmp -e mnt \
         -no-xattrs -no-duplicates -noappend -mem "$MEM_LIMIT" -v 2> >(grep -v "Unrecognised xattr prefix" >&2); then
         echo "Erro ao criar o sistema de arquivos root."
         exit 1
@@ -153,22 +153,6 @@ fix_firefox() {
     msg "Recriando diretórios de cache do Firefox..."
     mkdir -p ~/.cache/mozilla/firefox/*/cache2
     mkdir -p ~/.mozilla/firefox/*/sessionstore-backups
-
-    # Suprimir erros do /proc ao limpar o Firefox
-    msg "Limpando arquivos do /proc relacionados ao Firefox..."
-    rm /proc/*/task/*/maps 2>/dev/null
-    rm /proc/*/task/*/smaps 2>/dev/null
-    rm /proc/*/task/*/smaps_rollup 2>/dev/null
-    rm /proc/*/task/*/stack 2>/dev/null
-    rm /proc/*/task/*/stat 2>/dev/null
-    rm /proc/*/task/*/statm 2>/dev/null
-    rm /proc/*/task/*/status 2>/dev/null
-    rm /proc/*/task/*/syscall 2>/dev/null
-    rm /proc/*/task/*/uid_map 2>/dev/null
-    rm /proc/*/task/*/wchan 2>/dev/null
-    rm /proc/*/*timerslack_ns 2>/dev/null
-    rm /proc/*/uid_map 2>/dev/null
-    rm /proc/*/task/*/wchan 2>/dev/null
 
     # Informar que o processo de correção foi concluído
     msg "Correções do Firefox concluídas."
