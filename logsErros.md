@@ -88,3 +88,49 @@ xorriso : aborting : -abort_on 'FAILURE' encountered 'FAILURE'
 grub-mkrescue: erro: `xorriso` invocation failed
 .
 Erro ao criar a ISO.
+Unrecognised xattr prefix system.posix_acl_access
+
+Unrecognised xattr prefix system.posix_acl_access
+
+Unrecognised xattr prefix system.posix_acl_access
+
+Unrecognised xattr prefix system.posix_acl_access
+
+Unrecognised xattr prefix system.posix_acl_access
+
+Unrecognised xattr prefix system.posix_acl_default
+Failed to read file //proc/3423224/task/3423253/mem, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/mountinfo, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/mounts, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/numa_maps, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/oom_adj, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/oom_score, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/oom_score_adj, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/pagemap, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/patch_state, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/personality, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/projid_map, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/sched, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/schedstat, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/sessionid, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/setgroups, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/smaps, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/smaps_rollup, creating empty file
+[===========\                                                                                                                                                                                                            ]  20399/383012   5%
+Failed to read file //proc/3423224/task/3423253/stack, creating empty file
