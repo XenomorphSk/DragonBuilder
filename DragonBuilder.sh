@@ -3,8 +3,8 @@
 # Title:        Dragon Builder
 # Author:       Gabriel S. Ribeiro
 # Date:         2024-09-21
-# Version:      1.1
-# Description:  Script para criar ISO UEFI personalizada com sistema completo
+# Version:      1.2
+# Description:  Script para criar ISO UEFI personalizada com sistema completo, otimizado
 ### END HEADER INFO
 
 # Variáveis
@@ -13,6 +13,7 @@ WORK_DIR="/tmp/iso_build"
 EFI_DIR="$WORK_DIR/EFI/boot"
 GRUB_CFG_PATH="$WORK_DIR/boot/grub/grub.cfg"
 ROOTFS_PATH="/"  # Atualize o caminho para o sistema de arquivos root completo
+MEM_LIMIT="4096M"  # Limite de memória para mksquashfs
 
 # Função para instalar dependências
 install_dependencies() {
@@ -44,6 +45,28 @@ setup_filesystem() {
     fi
 }
 
+# Função para verificar espaço em disco e memória
+check_resources() {
+    echo "Verificando espaço em disco e memória..."
+    
+    # Verifica espaço disponível no diretório de trabalho
+    DISK_AVAILABLE=$(df "$WORK_DIR" | tail -1 | awk '{print $4}')
+    
+    # Verifica se o espaço é maior que 10GB (requisito mínimo aproximado)
+    if [ "$DISK_AVAILABLE" -lt 10485760 ]; then
+        echo "Erro: Espaço insuficiente em disco (requer pelo menos 10GB)."
+        exit 1
+    fi
+
+    # Verifica memória disponível
+    MEM_AVAILABLE=$(free -m | grep Mem | awk '{print $7}')
+    
+    # Verifica se a memória disponível é maior que 4GB
+    if [ "$MEM_AVAILABLE" -lt 4096 ]; then
+        echo "Aviso: Memória disponível é baixa (<4GB). Isso pode afetar o processo de criação do filesystem."
+    fi
+}
+
 # Função para criar o sistema de arquivos root
 copy_rootfs() {
     echo "Criando sistema de arquivos root (squashfs)..."
@@ -54,9 +77,16 @@ copy_rootfs() {
         exit 1
     fi
     
-    # Cria o sistema de arquivos root, excluindo diretórios indesejados e atributos
-    # Exclui /proc, /run, /sys, e atributos estendidos (-no-xattrs)
-    mksquashfs "$ROOTFS_PATH" "$WORK_DIR/casper/filesystem.squashfs" -e boot -e /proc/* -e /run/* -e /sys/* -no-xattrs -v
+    # Cria o sistema de arquivos root, excluindo diretórios indesejados e atributos estendidos (-no-xattrs)
+    # Exclui /proc, /run, /sys, /dev, /tmp, /mnt
+    mksquashfs "$ROOTFS_PATH" "$WORK_DIR/casper/filesystem.squashfs" \
+        -e boot -e /proc/* -e /run/* -e /sys/* -e /dev/* -e /tmp/* -e /mnt/* \
+        -no-xattrs -no-duplicates -mem "$MEM_LIMIT" -v
+
+    if [ $? -ne 0 ]; then
+        echo "Erro ao criar o sistema de arquivos root."
+        exit 1
+    fi
 
     echo "Sistema de arquivos root copiado com sucesso."
 }
@@ -113,6 +143,7 @@ fix_firefox() {
 # Função principal
 main() {
     install_dependencies
+    check_resources
     setup_efi_structure
     setup_filesystem
     copy_rootfs
