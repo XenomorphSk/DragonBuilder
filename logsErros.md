@@ -1,136 +1,52 @@
-Exportable Squashfs 4.0 filesystem, gzip compressed, data block size 131072
-	compressed data, compressed metadata, compressed fragments,
-	compressed xattrs, compressed ids
-	duplicates are removed
-Filesystem size 4257461.65 Kbytes (4157.68 Mbytes)
-	30.48% of uncompressed filesystem size (13969794.67 Kbytes)
-Inode table size 4548383 bytes (4441.78 Kbytes)
-	26.94% of uncompressed inode table size (16883863 bytes)
-Directory table size 4585159 bytes (4477.69 Kbytes)
-	40.59% of uncompressed directory table size (11296405 bytes)
-Xattr table size 242 bytes (0.24 Kbytes)
-	37.29% of uncompressed xattr table size (649 bytes)
-Number of duplicate files found 61286
-Number of inodes 452290
-Number of files 316249
-Number of fragments 21898
-Number of symbolic links  93825
-Number of device nodes 0
-Number of fifo nodes 0
-Number of socket nodes 117
-Number of directories 42099
-Number of ids (unique uids + gids) 35
-Number of uids 18
-	root (0)
-	daemon (1)
-	lp (7)
-	lightdm (117)
-	administrador (1000)
-	distrito (1001)
-	unknown (755)
-	_apt (105)
-	colord (122)
-	ntp (106)
-	avahi-autoipd (115)
-	man (6)
-	unknown (62803)
-	speech-dispatcher (124)
-	geoclue (114)
-	nm-openvpn (125)
-	tss (107)
-	syslog (104)
-Number of gids 30
-	root (0)
-	daemon (1)
-	dip (30)
-	lp (7)
-	shadow (42)
-	ssl-cert (117)
-	administrador (1000)
-	distrito (1001)
-	tty (5)
-	crontab (105)
-	mlocate (120)
-	ssh (122)
-	messagebus (106)
-	utmp (43)
-	mail (8)
-	staff (50)
-	lpadmin (115)
-	man (12)
-	unknown (62803)
-	avahi-autoipd (124)
-	colord (131)
-	geoclue (123)
-	lightdm (125)
-	ntp (111)
-	nm-openvpn (134)
-	sambashare (135)
-	tss (112)
-	adm (4)
-	systemd-journal (101)
-	syslog (110)
-Sistema de arquivos root copiado com sucesso.
-Criando a ISO UEFI personalizada...
-xorriso 1.5.2 : RockRidge filesystem manipulator, libburnia project.
-
-Drive current: -outdev 'stdio:custom_linux_uefi.iso'
-Media current: stdio file, overwriteable
-Media status : is blank
-Media summary: 0 sessions, 0 data blocks, 0 data,  177g free
-Added to ISO image: directory '/'='/tmp/grub.dVk7Ai'
-xorriso : UPDATE :     575 files added in 1 seconds
-xorriso : FAILURE : File exceeds size limit of 4294967295 bytes: '/tmp/iso_build/casper/filesystem.squashfs'
-
-Added to ISO image: directory '/'='/tmp/iso_build'
-xorriso : UPDATE :     584 files added in 1 seconds
-xorriso : aborting : -abort_on 'FAILURE' encountered 'FAILURE'
-grub-mkrescue: erro: `xorriso` invocation failed
-.
-Erro ao criar a ISO.
+Creating 4.0 filesystem on /tmp/iso_build/casper/filesystem.squashfs, block size 131072.
+[======\                                                                                                                                                                                                                 ]  11534/383042   3%
 Unrecognised xattr prefix system.posix_acl_access
 
 Unrecognised xattr prefix system.posix_acl_access
+[=======-                                                                                                                                                                                                                ]  12519/383042   3%
+Read failed because Invalid argument
 
-Unrecognised xattr prefix system.posix_acl_access
+Read failed because Invalid argument
 
-Unrecognised xattr prefix system.posix_acl_access
+Read failed because Invalid argument
 
-Unrecognised xattr prefix system.posix_acl_access
+Read failed because Invalid argument
 
-Unrecognised xattr prefix system.posix_acl_default
-Failed to read file //proc/3423224/task/3423253/mem, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/mountinfo, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/mounts, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/numa_maps, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/oom_adj, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/oom_score, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/oom_score_adj, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/pagemap, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/patch_state, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/personality, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/projid_map, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/sched, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/schedstat, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/sessionid, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/setgroups, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/smaps, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/smaps_rollup, creating empty file
-[===========\                                                                                                                                                                                                            ]  20399/383012   5%
-Failed to read file //proc/3423224/task/3423253/stack, creating empty file
+Read failed because Invalid argument
+
+Read failed because Invalid argument
+
+Read failed because Invalid argument
+
+Read failed because Invalid argument
+
+Read failed because Invalid argument
+
+Read failed because Input/output error
+
+
+Read failed because Input/output error
+[===========-                                                                                                                                                                                                            ]  20406/383042   5%
+Failed to read file //proc/3428346/attr/apparmor/current, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/apparmor/exec, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/apparmor/prev, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/current, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/display, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/exec, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/fscreate, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/keycreate, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/prev, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/smack/current, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/attr/sockcreate, creating empty file
+[===========-                                                                                                                                                                                                            ]  20429/383042   5%
+Failed to read file //proc/3428346/autogroup, creating empty file
